@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Control</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    .container {
+      width: 80%;
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .login-btn {
+      width: 100%;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .login-btn:hover {
+      background-color: #0056b3;
+    }
+    .dashboard {
+      display: none;
+      padding: 20px;
+      background: white;
+      margin: 50px auto;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+    .buttons button {
+      margin: 10px;
+      padding: 15px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .buttons button:hover {
+      background-color: #218838;
+    }
+    .logout-btn {
+      width: 100%;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .logout-btn:hover {
+      background-color: #c82333;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      display: block;
+      padding: 15px;
+      background-color: #007BFF;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    a:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Section -->
+  <div class="container" id="loginContainer">
+    <h2>Unit Control Login</h2>
+    <input type="password" id="passwordInput" placeholder="Enter Password">
+    <button class="login-btn" onclick="checkPassword()">Login</button>
+    <p id="errorMessage" style="color: red; display: none;">Incorrect password. Try again.</p>
+  </div>
+
+  <!-- Dashboard Section -->
+  <div class="dashboard" id="dashboard">
+    <h2>Welcome to Unit Control</h2>
+    <div class="buttons">
+      <!-- Student registration button -->
+      <a href="registration .html">Student Registration</a>
+      <button onclick="goToPage('restriction_panel.html')">Restriction Panel</button>
+      <button onclick="goToPage('library_unit.html')">Library Unit</button>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    function checkPassword() {
+      var password = document.getElementById("passwordInput").value;
+      if (password === "1234") {
+        document.getElementById("loginContainer").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+      } else {
+        document.getElementById("errorMessage").style.display = "block";
+      }
+    }
+
+    function goToPage(page) {
+      window.location.href = page;
+    }
+
+    function logout() {
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("loginContainer").style.display = "block";
+      document.getElementById("passwordInput").value = "";
+    }
+  </script>
+
+</body>
+</html>

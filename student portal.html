@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - Creative Media Academy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            
+        }
+
+        /* Login Section */
+        #login-section {
+            max-width: 300px;
+            margin: 100px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Main Content */
+        #main-content {
+            display: none;
+            padding: 20px;
+        }
+
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* Hamburger Menu */
+        .hamburger-menu {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .hamburger-btn {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        #menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #menu ul li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #menu ul li:last-child {
+            border-bottom: none;
+        }
+
+        #menu ul li a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        #menu ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Student Details Section */
+        .student-details {
+            text-align: left;
+            margin-top: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Section -->
+    <div id="login-section">
+        <h2>Student Portal Login</h2>
+        <input type="text" id="username" placeholder="Enter Username">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="login()">Login</button>
+        <p id="login-error" style="color: red; display: none;">Invalid credentials. Try again.</p>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <header>
+            <h1>Welcome to Creative Media Academy</h1>
+            <p>Explore and manage your student resources efficiently.</p>
+        </header>
+
+        <!-- Hamburger Menu -->
+        <div class="hamburger-menu">
+            <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+            <nav id="menu">
+                <ul>
+                    <li><a href="javascript:void(0)" onclick="showStudentDetails()">Student Details</a></li>
+                    <li><a id="portfolioLink" href="design portfolio .html">Portfolio Panel</a></li>
+                    <li><a id="adminLink" href="admin.html">Admin Panel</a></li>
+                    <li><a id="subscriptionLink" href="subscription panel .html">Subscription Panel</a></li>
+                    <li><a id="socialPanelLink" href="social panel .html">Social Panel</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Student Details Section -->
+        <div class="student-details" id="studentDetailsSection" style="display: none;">
+            <p>Hi <span id="studentName"></span>,</p>
+            <p>Here are your details:</p>
+
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName">
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email">
+
+            <label for="age">Age:</label>
+            <input type="number" id="age">
+
+            <label for="location">Location:</label>
+            <input type="text" id="location">
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone">
+
+            <button class="submit-btn" onclick="submitDetails()">Update</button>
+            <button class="submit-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        // Example of student data stored in localStorage (you can modify this part to add real student data)
+        let students = JSON.parse(localStorage.getItem("students")) || [];
+
+        function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Find student with the matching username and portfolio code
+            let student = students.find(s => s.firstName === username && s.portfolioCode === password);
+
+            if (student) {
+                // After successful login, show the main content and hide login section
+                document.getElementById("login-section").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+
+                // Set dynamic links for the student
+                document.getElementById("studentDetailsLink").href = "student details .html";
+                document.getElementById("portfolioLink").href = "design portfolio .html";
+                document.getElementById("adminLink").href = "admin .html";
+                document.getElementById("subscriptionLink").href = "subscription panel .html";
+                document.getElementById("socialPanelLink").href = student.firstName + "_social_panel.html";
+
+                // Save student data to localStorage upon login
+                localStorage.setItem("loggedInStudent", JSON.stringify(student));
+
+                // Pre-fill student details
+                document.getElementById("studentName").innerText = student.firstName;
+                document.getElementById("firstName").value = student.firstName;
+                document.getElementById("lastName").value = student.lastName;
+                document.getElementById("email").value = student.email;
+                document.getElementById("age").value = student.age;
+                document.getElementById("location").value = student.location;
+                document.getElementById("phone").value = student.phone;
+            } else {
+                // Show error message if login fails
+                document.getElementById("login-error").style.display = "block";
+            }
+        }
+
+        // Toggle the visibility of the hamburger menu
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        // Show student details section when clicked from the menu
+        function showStudentDetails() {
+            document.getElementById("studentDetailsSection").style.display = "block";
+        }
+
+        function submitDetails() {
+            const updatedStudent = {
+                firstName: document.getElementById("firstName").value,
+                lastName: document.getElementById("lastName").value,
+                email: document.getElementById("email").value,
+                age: document.getElementById("age").value,
+                location: document.getElementById("location").value,
+                phone: document.getElementById("phone").value,
+                portfolioCode: students[0].portfolioCode // Ensure you keep the portfolio code intact
+            };
+
+            // Save updated student data back to localStorage
+            let updatedStudents = students.map(student =>
+                student.firstName === updatedStudent.firstName ? updatedStudent : student
+            );
+
+            localStorage.setItem("students", JSON.stringify(updatedStudents));
+
+            alert("Details updated successfully!");
+        }
+
+        // Logout the student
+        function logout() {
+            // Remove only the logged-in session from localStorage, not the entire student list
+            localStorage.removeItem("loggedInStudent");
+
+            // Hide main content and show login section again
+            document.getElementById("main-content").style.display = "none";
+            document.getElementById("login-section").style.display = "block";
+
+            // Reset the form inputs
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("login-error").style.display = "none";
+
+            alert("You have logged out successfully!");
+        }
+
+        // Check if the user is logged in
+        window.onload = function () {
+            const loggedInStudent = JSON.parse(localStorage.getItem("loggedInStudent"));
+
+            if (loggedInStudent) {
+                // If there's a logged-in student, show their details automatically
+                document.getElementById("login-section").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+
+                // Set dynamic links for the student
+                document.getElementById("studentDetailsLink").href = "student details .html";
+                document.getElementById("portfolioLink").href = "design portfolio .html";
+                document.getElementById("adminLink").href = "admin .html";
+                document.getElementById("subscriptionLink").href = "subscription panel .html";
+                document.getElementById("socialPanelLink").href = loggedInStudent.firstName + "_social_panel.html";
+
+                // Pre-fill student details
+                document.getElementById("studentName").innerText = loggedInStudent.firstName;
+                document.getElementById("firstName").value = loggedInStudent.firstName;
+                document.getElementById("lastName").value = loggedInStudent.lastName;
+                document.getElementById("email").value = loggedInStudent.email;
+                document.getElementById("age").value = loggedInStudent.age;
+                document.getElementById("location").value = loggedInStudent.location;
+                document.getElementById("phone").value = loggedInStudent.phone;
+            }
+        }
+    </script>
+
+</body>
+</html>
