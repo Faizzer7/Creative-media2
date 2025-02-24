@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .student-btn {
+            background-color: white;
+            color: #007BFF;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .student-btn:hover {
+            background-color: lightgray;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .student-list {
+            display: none;
+            text-align: left;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 50px auto;
+        }
+
+        .student-list h3 {
+            text-align: center;
+        }
+
+        .student-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .student-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .disable-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .disabled {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .back-btn {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .back-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>Student Registration</h2>
+        <button class="student-btn" onclick="showStudents()">View Registered Students</button>
+    </header>
+
+    <div class="container" id="registrationForm">
+        <input type="text" id="firstName" placeholder="First Name">
+        <input type="text" id="lastName" placeholder="Last Name">
+        <input type="text" id="portfolioCode" placeholder="Portfolio Code">
+        <button onclick="registerStudent()">Register</button>
+    </div>
+
+    <div class="student-list" id="studentList">
+        <h3>Registered Students</h3>
+        <ul id="students"></ul>
+        <button class="back-btn" onclick="showHome()">Back to Registration</button>
+    </div>
+
+    <script>
+        function registerStudent() {
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const portfolioCode = document.getElementById("portfolioCode").value;
+
+            if (!firstName || !lastName || !portfolioCode) {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            let students = JSON.parse(localStorage.getItem("students")) || [];
+            students.push({ firstName, lastName, portfolioCode, disabled: false });
+            localStorage.setItem("students", JSON.stringify(students));
+
+            alert(`Student ${firstName} registered successfully!`);
+
+            // Clear input fields
+            document.getElementById("firstName").value = "";
+            document.getElementById("lastName").value = "";
+            document.getElementById("portfolioCode").value = "";
+        }
+
+        function showStudents() {
+            let students = JSON.parse(localStorage.getItem("students")) || [];
+            const studentList = document.getElementById("students");
+            studentList.innerHTML = "";
+
+            students.forEach((student, index) => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <span class="${student.disabled ? 'disabled' : ''}">
+                        ${index + 1}. ${student.firstName} ${student.lastName} - ${student.portfolioCode}
+                    </span>
+                    <button class="disable-btn" onclick="disableStudent(${index})">
+                        ${student.disabled ? 'Enable' : 'Disable'}
+                    </button>
+                `;
+                studentList.appendChild(li);
+            });
+
+            document.getElementById("registrationForm").style.display = "none";
+            document.getElementById("studentList").style.display = "block";
+        }
+
+        function showHome() {
+            document.getElementById("registrationForm").style.display = "block";
+            document.getElementById("studentList").style.display = "none";
+        }
+
+        function disableStudent(index) {
+            let students = JSON.parse(localStorage.getItem("students")) || [];
+            students[index].disabled = !students[index].disabled;
+            localStorage.setItem("students", JSON.stringify(students));
+            showStudents();
+        }
+    </script>
+
+</body>
+</html>
