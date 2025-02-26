@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request for the Course - Creative Media Academy</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #0b3d91;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header h2 {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #0b3d91;
+        }
+
+        .disclaimer {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .submit-btn {
+            background-color: #0b3d91;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #1a73e8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #0b3d91;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .phone-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .phone-group input {
+            width: 100%;
+            margin-left: 10px;
+            padding-left: 10px;
+        }
+
+        /* Ensure the "+" symbol is visible and part of the input */
+        .country-code-input {
+            width: 15%;
+            padding-left: 10px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .whatsapp-input {
+            width: 80%;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Request for the Course</h1>
+        <h2>Fill in the details to enroll in Creative Academy</h2>
+    </header>
+
+    <section class="form-container">
+        <form id="course-request-form">
+            <div class="form-group">
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" name="first-name" required>
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" name="last-name" required>
+            </div>
+            <!-- Email Address Field -->
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email address">
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Where are you from?</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            
+            
+            <!-- WhatsApp Number with Editable Country Code -->
+            <div class="form-group phone-group">
+                <label for="whatsapp">WhatsApp Phone Number:</label>
+                <input type="text" id="whatsapp-country" name="whatsapp-country" class="country-code-input" value="+" maxlength="4" placeholder="+" required>
+                <input type="tel" id="whatsapp" name="whatsapp" class="whatsapp-input" required placeholder="Enter your WhatsApp number">
+            </div>
+
+            <div class="form-group">
+                <label for="heard-from">How did you hear about us?</label>
+                <select id="heard-from" name="heard-from">
+                    <option value="tiktok">TikTok</option>
+                    <option value="friends">Friends</option>
+                    <option value="whatsapp">WhatsApp</option>
+                    <option value="twitter">Twitter</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <!-- New Questions -->
+            <div class="form-group">
+                <label for="telegram">Are you on Telegram? this is where the course will be administered</label>
+                <select id="telegram" name="telegram">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="pc">Do you have a PC?</label>
+                <select id="pc" name="pc">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <div class="disclaimer">
+                <p><strong>Disclaimer:</strong> All names used will appear on your course certificate.</p>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="submit-btn">Submit Request</button>
+            </div>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Creative Media Academy. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('course-request-form');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent form submission for demo purposes
+
+                const firstName = document.getElementById('first-name').value;
+                const lastName = document.getElementById('last-name').value;
+                const email = document.getElementById('email').value;
+                const age = document.getElementById('age').value;
+                const location = document.getElementById('location').value;
+                
+                const whatsappCountry = document.getElementById('whatsapp-country').value;
+                const whatsapp = document.getElementById('whatsapp').value;
+                const heardFrom = document.getElementById('heard-from').value;
+                const telegram = document.getElementById('telegram').value;
+                const pc = document.getElementById('pc').value;
+
+                // Create the welcome message and request for confirmation
+                const message = `
+                    Hi ${firstName}, 
+                    How was your day? Hope it was good! 
+                    
+                    Thank you for showing interest in learning Graphic Design with us. 
+                    Please review the information you've submitted below:
+                    
+                    - First Name: ${firstName}
+                    - Last Name: ${lastName}
+                    - Email: ${email}
+                    - Age: ${age}
+                    - Location: ${location}
+                    - WhatsApp Number: ${whatsappCountry}${whatsapp}
+                    - How did you hear about us: ${heardFrom}
+                    - Are you on Telegram: ${telegram}
+                    - Do you have a PC: ${pc}
+                    
+                    Please confirm if all this information is correct.
+                `;
+
+                // Encode the message to make it URL-safe
+                const encodedMessage = encodeURIComponent(message);
+
+                // Redirect to WhatsApp with the pre-filled message
+                window.location.href = `https://wa.me/254798171788?text=${encodedMessage}`;
+
+                // Wait for a few seconds, then reset the form and redirect
+                setTimeout(() => {
+                    // Clear the form fields
+                    form.reset();
+                    // Redirect to Creative Media homepage
+                    window.location.href = "creative media .html";
+                }, 3000); // Delay before redirecting (in milliseconds)
+            });
+        });
+    </script>
+</body>
+</html>
