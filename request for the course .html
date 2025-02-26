@@ -250,10 +250,15 @@
                 window.location.href = `https://wa.me/254798171788?text=${encodedMessage}`;
 
                 // Wait for a few seconds, then reset the form and redirect
-                setTimeout(() => {
-                    // Clear the form fields
-                    form.reset();
                 
+                setTimeout(() => {
+    // Clear the form fields
+    form.reset();
+    // Redirect to index.html instead of creative media.html
+    window.location.href = "index.html";
+}, 3000); // Delay before redirecting (in milliseconds)
+                   });
+        });
 
     </script>
 </body>
